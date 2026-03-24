@@ -11,3 +11,4 @@ COMPONENT_ADD_INCLUDEDIRS += ../prboom
 
 #include $(IDF_PATH)/make/component_common.mk
 
+CFLAGS += -Wno-error=misleading-indentation -Wno-error=unused-const-variable -Wno-error=implicit-function-declaration -Wno-error=int-conversion

@@ -17,6 +17,7 @@
 #include <string.h>
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
+#include "freertos/semphr.h"
 #include "esp_system.h"
 #include "driver/spi_master.h"
 #include "soc/gpio_struct.h"
@@ -58,7 +59,7 @@ typedef struct {
 } ili_init_cmd_t;
 
 #undef CONFIG_HW_LCD_TYPE
-#define CONFIG_HW_LCD_TYPE 0
+#define CONFIG_HW_LCD_TYPE 1
 #if (CONFIG_HW_LCD_TYPE == 1)
 
 static const ili_init_cmd_t ili_init_cmds[]={
@@ -296,7 +297,7 @@ void IRAM_ATTR displayTask(void *arg) {
     //heap_caps_print_heap_info(MALLOC_CAP_DMA);
 
     //Initialize the SPI bus
-    ret=spi_bus_initialize(VSPI_HOST, &buscfg, 2);  // DMA Channel
+    ret=spi_bus_initialize(VSPI_HOST, &buscfg, 1);  // DMA Channel
     assert(ret==ESP_OK);
     //Attach the LCD to the SPI bus
     ret=spi_bus_add_device(VSPI_HOST, &devcfg, &spi);

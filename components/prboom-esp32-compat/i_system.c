@@ -96,19 +96,19 @@
 
 #include <sys/time.h>
 
-#define MODE_SPI 1
-#define PIN_NUM_MISO 2 //4
-#define PIN_NUM_MOSI 13
-#define PIN_NUM_CLK  14
-#define PIN_NUM_CS   15
+//#define MODE_SPI 1           
+//#define PIN_NUM_MISO 2 //4
+//#define PIN_NUM_MOSI 15
+//#define PIN_NUM_CLK  14
+//#define PIN_NUM_CS   13
 
-/*
-SDMMC pin configuration
+
+//SDMMC pin configuration only if naked SDMMC module used
 #define MODE_SPI 0
-MOSI = 15
-MISO = 2
-CLK = 14
-*/
+// MOSI = 15
+// MISO = 2 // vs external pullup resistor 10k to 3.3V TTGO V8
+// CLK = 14
+
 
 
 int realtime=0;
@@ -191,6 +191,9 @@ const char* I_SigString(char* buf, size_t sz, int signum)
 
 extern unsigned char *doom1waddata;
 static bool init_SD = false;
+//static sdmmc_card_t* card = NULL;  // <-- ADD THIS LINE DEEPSEEK !!!!!!!!!!!!
+
+// below initial Init_SD function
 
 void Init_SD()
 {
@@ -232,6 +235,17 @@ void Init_SD()
 	//sdmmc_card_print_info(stdout, card);
 	init_SD = true;
 }
+
+
+#define MODE_SPI 0  // Change to 0 for SDMMC mode
+
+// Remove or comment out SPI pin defines since not needed
+// #define PIN_NUM_MISO 2
+// #define PIN_NUM_MOSI 15
+// #define PIN_NUM_CLK  14
+// #define PIN_NUM_CS   13
+
+
 
 typedef struct {
 	//const esp_partition_t* part;

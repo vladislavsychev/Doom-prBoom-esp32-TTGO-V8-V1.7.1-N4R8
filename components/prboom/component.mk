@@ -10,5 +10,5 @@
 #include $(IDF_PATH)/make/component_common.mk
 
 
-CFLAGS += -Wno-error=char-subscripts -Wno-error=unused-value -Wno-error=parentheses -Wno-error=int-to-pointer-cast -Wno-pointer-sign \
-		-Wno-error=unused-but-set-parameter -Wno-error=maybe-uninitialized
+CFLAGS += -w -Wno-error=char-subscripts -Wno-error=unused-value -Wno-error=parentheses -Wno-error=int-to-pointer-cast -Wno-pointer-sign \
+		-Wno-error=unused-but-set-parameter -Wno-error=maybe-uninitialized -Wno-error=duplicate-decl-specifier -Wno-error=implicit-fallthrough -Wno-error=unused-function -Wno-error=nonnull -Wno-error=misleading-indentation -Wno-error=unused-const-variable=
