@@ -6,12 +6,13 @@ Trick for SD card reading
 External pullup 10k to Pin2
 
 TFT ST7789
-LCD CS    29
-LCD CLK   30
-LCD MISO  31
-LCD RESER 33
-LCD DC    36
-LCD MOSI  37
+LCD pins   GPIO
+LCD CS     io5
+LCD CLK    io18
+LCD MISO   io19
+LCD RESET  io21
+LCD DC     io22
+LCD MOSI   io23
 
 Current button mapping:
 GPIO    Action 
@@ -22,5 +23,5 @@ GPIO    Action
 33      Use 
 35      Fire
 
-Sound 
-Pin 10
+Sound DAC esp32 to ext amp. Whatever. Does not check at all.
+Pin io25
