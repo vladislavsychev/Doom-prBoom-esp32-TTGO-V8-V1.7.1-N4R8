@@ -25,4 +25,4 @@ Current button mapping
 35      Fire
 
 Sound DAC esp32 to ext amp. Whatever. Does not check at all.
-Pin io25
+Pin io25 or io26. Mix problem io25 right, io26 left.
