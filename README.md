@@ -25,5 +25,5 @@ io35           Move right,
 io32           Use, 
 io34           Fire
 
-Sound DAC esp32 to ext amp. Whatever. 
+Sound DAC esp32 to ext amp. Whatever. Use 0.4mf capasitor in line.
 Pin io25 or io26. Mix problem io25 right, io26 left.
