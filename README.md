@@ -13,7 +13,8 @@ LCD_CLK    io18,
 LCD_MISO   io19,
 LCD_RESET  io21,
 LCD_DC     io22,
-LCD_MOSI   io23
+LCD_MOSI   io23,
+LCD_BCKL   io5 (or use 3.3V I did it)
 
 Current button mapping ( and you need pullup)
 (GPIO    Action): 
