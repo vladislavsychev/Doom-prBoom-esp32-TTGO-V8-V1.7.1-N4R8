@@ -208,6 +208,7 @@ void Init_SD()
     slot_config.gpio_cs   = PIN_NUM_CS;
 	slot_config.dma_channel = 1; //2
 #else
+	// gpio_set_pull_mode(GPIO_NUM_2, GPIO_PULLUP_ONLY);  // IO2 pull-up required for SDMMC + TFT
 	sdmmc_host_t host = SDMMC_HOST_DEFAULT();
 	host.flags = SDMMC_HOST_FLAG_1BIT;
 	//host.max_freq_khz = SDMMC_FREQ_HIGHSPEED;
