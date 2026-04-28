@@ -96,7 +96,7 @@
 
 #include <sys/time.h>
 
-//#define MODE_SPI 1           
+//#define MODE_SPI 1      // vs does not work in TTGO T8 v1.7     
 //#define PIN_NUM_MISO 2 //4
 //#define PIN_NUM_MOSI 15
 //#define PIN_NUM_CLK  14
@@ -106,7 +106,7 @@
 //SDMMC pin configuration only if naked SDMMC module used
 #define MODE_SPI 0
 // MOSI = 15
-// MISO = 2 // vs external pullup resistor 10k to 3.3V TTGO V8
+// MISO = 2 // vs any case need external pullup resistor >10k (20k, 47k) to 3.3V TTGO V8
 // CLK = 14
 
 

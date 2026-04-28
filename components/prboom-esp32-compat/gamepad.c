@@ -54,6 +54,10 @@ static const GPIOKeyMap keymap[]={
 	{33, &key_use},				//cross
 	{35, &key_fire},			//circle
 	{35, &key_menu_enter},
+	{4, &key_speed},                       // vs
+	{27, &key_weapontoggle},               // vs
+	// {3, &key_map},                      // vs RX pin must be disconect of pull-up resistor before upload programm
+	//{1, &key_pause},                     // vs TX pin must be disconect of pull-up resistor before upload programm
 	{0, NULL},
 };
 /*	

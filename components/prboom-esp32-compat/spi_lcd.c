@@ -28,13 +28,13 @@
 
 
 #if 0
-#define PIN_NUM_MISO 25
+#define PIN_NUM_MISO 19
 #define PIN_NUM_MOSI 23
-#define PIN_NUM_CLK  19
-#define PIN_NUM_CS   22
-#define PIN_NUM_DC   21
-#define PIN_NUM_RST  18
-#define PIN_NUM_BCKL 5
+#define PIN_NUM_CLK  18
+#define PIN_NUM_CS   5
+#define PIN_NUM_DC   22
+#define PIN_NUM_RST  21
+#define PIN_NUM_BCKL 1
 #else
 #define PIN_NUM_MOSI CONFIG_HW_LCD_MOSI_GPIO
 #define PIN_NUM_MISO CONFIG_HW_LCD_MISO_GPIO
@@ -285,7 +285,7 @@ void IRAM_ATTR displayTask(void *arg) {
         .max_transfer_sz=(MEM_PER_TRANS*2)+16
     };
     spi_device_interface_config_t devcfg={
-        .clock_speed_hz=40000000,               //Clock out at 26 MHz. Yes, that's heavily overclocked.
+        .clock_speed_hz=80000000,               //Clock out at 26 MHz. Yes, that's heavily overclocked.
         .mode=0,                                //SPI mode 0
         .spics_io_num=PIN_NUM_CS,               //CS pin
         .queue_size=NO_SIM_TRANS,               //We want to be able to queue this many transfers
@@ -327,7 +327,8 @@ void IRAM_ATTR displayTask(void *arg) {
 		send_header_start(spi, 0, 0, 320, 240);
 		send_header_cleanup(spi);
 		for (x=0; x<320*240; x+=MEM_PER_TRANS) {
-#ifdef DOUBLE_BUFFER
+		  
+		    #ifdef DOUBLE_BUFFER
 			for (i=0; i<MEM_PER_TRANS; i+=4) {
 				uint32_t d=currFbPtr[(x+i)/4];
 				dmamem[idx][i+0]=lcdpal[(d>>0)&0xff];
@@ -335,12 +336,13 @@ void IRAM_ATTR displayTask(void *arg) {
 				dmamem[idx][i+2]=lcdpal[(d>>16)&0xff];
 				dmamem[idx][i+3]=lcdpal[(d>>24)&0xff];
 			}
-#else
+                    #else
 			for (i=0; i<MEM_PER_TRANS; i++) {
 				dmamem[idx][i]=lcdpal[myData[i]];
 			}
 			myData+=MEM_PER_TRANS;
-#endif
+			#endif
+
 			trans[idx].length=MEM_PER_TRANS*16;
 			trans[idx].user=(void*)1;
 			trans[idx].tx_buffer=dmamem[idx];
@@ -381,7 +383,8 @@ void spi_lcd_wait_finish() {
 
 void spi_lcd_send(uint16_t *scr) {
 #ifdef DOUBLE_BUFFER
-	memcpy(currFbPtr, scr, 320*240);
+  	memcpy(currFbPtr, scr, 320*240);
+  //  memcpy(currFbPtr, scr, 320*240*2); // deepseek change previous line
 	//Theoretically, also should double-buffer the lcdpal array... ahwell.
 #else
 	currFbPtr=scr;
@@ -395,7 +398,7 @@ void spi_lcd_init() {
     dispDoneSem=xSemaphoreCreateBinary();
 #ifdef DOUBLE_BUFFER
 	//currFbPtr=pvPortMallocCaps(320*240, MALLOC_CAP_32BIT);
-    currFbPtr=heap_caps_malloc(320*240, MALLOC_CAP_32BIT);
+    currFbPtr=heap_caps_malloc(320*240, MALLOC_CAP_32BIT); // deepseek wants 320*240 to 320*240*2
 #endif
 #if CONFIG_FREERTOS_UNICORE
 	xTaskCreatePinnedToCore(&displayTask, "display", 6000, NULL, 6, NULL, 0);
